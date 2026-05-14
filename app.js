@@ -10,14 +10,14 @@ router.addRoute('/partners', partnersPage);
 router.addRoute('/contact', contactPage);
 
 // ==========================================
-// Navigation Scroll Effect
+// Unified Scroll Handler (rAF-throttled)
 // ==========================================
 const navbar = document.getElementById('navbar');
 const scrollTop = document.getElementById('scroll-top');
 
-let lastScrollY = 0;
+let _scrollTicking = false;
 
-window.addEventListener('scroll', () => {
+function onScrollFrame() {
     const currentScrollY = window.scrollY;
 
     // Navbar background on scroll
@@ -34,8 +34,24 @@ window.addEventListener('scroll', () => {
         scrollTop.classList.remove('visible');
     }
 
-    lastScrollY = currentScrollY;
-});
+    // Parallax on hero section (only while hero is in view)
+    const hero = document.querySelector('.hero');
+    if (hero && currentScrollY < window.innerHeight) {
+        const heroImage = hero.querySelector('.hero-image-wrapper');
+        if (heroImage) {
+            heroImage.style.transform = `translateY(${currentScrollY * 0.1}px)`;
+        }
+    }
+
+    _scrollTicking = false;
+}
+
+window.addEventListener('scroll', () => {
+    if (!_scrollTicking) {
+        window.requestAnimationFrame(onScrollFrame);
+        _scrollTicking = true;
+    }
+}, { passive: true });
 
 // Scroll to top click
 scrollTop.addEventListener('click', () => {
@@ -121,20 +137,6 @@ const statsObserver = new MutationObserver(() => {
 statsObserver.observe(document.getElementById('app'), {
     childList: true,
     subtree: false
-});
-
-// ==========================================
-// Parallax effect on hero section
-// ==========================================
-window.addEventListener('scroll', () => {
-    const hero = document.querySelector('.hero');
-    if (hero) {
-        const scrolled = window.scrollY;
-        const heroImage = hero.querySelector('.hero-image-wrapper');
-        if (heroImage && scrolled < window.innerHeight) {
-            heroImage.style.transform = `translateY(${scrolled * 0.1}px)`;
-        }
-    }
 });
 
 // ==========================================

@@ -1082,31 +1082,31 @@ function contactPage() {
                 <form id="contact-form" onsubmit="handleFormSubmit(event)">
                     <!-- Honeypot Field -->
                     <div class="form-group hp-wrapper">
-                        <label>Fax 번호 (입력하지 마세요)</label>
+                        <label for="contact-fax">Fax 번호 (입력하지 마세요)</label>
                         <input type="text" class="form-input" id="contact-fax" tabindex="-1" autocomplete="off">
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label>회사명 / 상호 <span class="required">*</span></label>
+                            <label for="company-name">회사명 / 상호 <span class="required">*</span></label>
                             <input type="text" class="form-input" id="company-name" placeholder="회사명을 입력해 주세요" required>
                         </div>
                         <div class="form-group">
-                            <label>담당자명 <span class="required">*</span></label>
+                            <label for="contact-name">담당자명 <span class="required">*</span></label>
                             <input type="text" class="form-input" id="contact-name" placeholder="성함을 입력해 주세요" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label>연락처 <span class="required">*</span></label>
+                            <label for="contact-phone">연락처 <span class="required">*</span></label>
                             <input type="tel" class="form-input" id="contact-phone" placeholder="010-0000-0000" required>
                         </div>
                         <div class="form-group">
-                            <label>이메일 <span class="required">*</span></label>
+                            <label for="contact-email">이메일 <span class="required">*</span></label>
                             <input type="email" class="form-input" id="contact-email" placeholder="email@company.com" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>업종 선택</label>
+                        <label for="contact-category">업종 선택</label>
                         <select class="form-select" id="contact-category">
                             <option value="">업종을 선택해 주세요</option>
                             <option value="bakery">베이커리 / 카페</option>
@@ -1116,8 +1116,8 @@ function contactPage() {
                             <option value="other">기타</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>관심 품종 (복수 선택 가능)</label>
+                    <div class="form-group" role="group" aria-labelledby="varieties-label">
+                        <label id="varieties-label">관심 품종 (복수 선택 가능)</label>
                         <div class="form-checkbox-group">
                             <label class="form-checkbox">
                                 <input type="checkbox" value="seolhyang"> 
@@ -1142,7 +1142,7 @@ function contactPage() {
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>문의 내용 <span class="required">*</span></label>
+                        <label for="contact-message">문의 내용 <span class="required">*</span></label>
                         <textarea class="form-textarea" id="contact-message" placeholder="납품 희망 품종, 예상 수량, 배송 지역 등을 알려주시면 더 정확한 안내를 드릴 수 있습니다." required></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary btn-submit">
