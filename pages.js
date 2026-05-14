@@ -43,7 +43,7 @@ function homePage() {
             
             
             <h1 class="hero-title-center">
-              프리미엄 딸기의 기준, 바이오두호
+              두호는 고객의 니즈에 맞는 딸기 <strong class="highlight-coral">품종과 품위</strong>를 공급합니다
             </h1>
             
             <p class="hero-description-center">
