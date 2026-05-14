@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(py -c \"from PIL import Image; print\\('ok'\\)\")",
+      "Bash(py -c ' *)",
+      "WebSearch"
+    ]
+  }
+}
