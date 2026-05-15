@@ -1,7 +1,6 @@
 # robots.txt for (농)바이오두호
-# ⚠️ 배포 시 아래 YOUR_DOMAIN_HERE를 실제 도메인으로 교체하세요.
 
 User-agent: *
 Allow: /
 
-Sitemap: https://YOUR_DOMAIN_HERE/sitemap.xml
+Sitemap: https://doohoberry.com/sitemap.xml
