@@ -1166,7 +1166,7 @@ function contactPage() {
                         <div class="contact-info-icon"><span class="emoji-icon">${brandIcon('mail')}</span></div>
                         <div class="contact-info-text">
                             <h4>이메일</h4>
-                            <p>kkk@bioduho.co.kr</p>
+                            <p>doohoberry@gmail.com</p>
                             <p>24시간 접수 가능</p>
                         </div>
                     </div>
@@ -1174,7 +1174,7 @@ function contactPage() {
                         <div class="contact-info-icon"><span class="emoji-icon">${brandIcon('location')}</span></div>
                         <div class="contact-info-text">
                             <h4>본사</h4>
-                            <p>세종특별자치시</p>
+                            <p>충청남도 천안시 서북구 성거읍 모전3길 3</p>
                             <p>(농)바이오두호</p>
                         </div>
                     </div>
@@ -1213,6 +1213,44 @@ function contactPage() {
 // Rate limiting state
 let _lastSubmitTime = 0;
 
+// Daily submission limit (per browser, via localStorage)
+const DAILY_SUBMIT_LIMIT = 5;
+const DAILY_STORAGE_PREFIX = 'doohoberry_submit_';
+
+function _getDailyStorageKey() {
+    const d = new Date();
+    return DAILY_STORAGE_PREFIX + d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+}
+
+function getDailySubmitCount() {
+    try {
+        return parseInt(localStorage.getItem(_getDailyStorageKey()) || '0', 10);
+    } catch (e) {
+        // localStorage unavailable (private mode, etc.) — fail open
+        return 0;
+    }
+}
+
+function incrementDailySubmitCount() {
+    try {
+        const key = _getDailyStorageKey();
+        const count = getDailySubmitCount() + 1;
+        localStorage.setItem(key, String(count));
+
+        // Clean up keys from previous days to avoid storage bloat
+        const stale = [];
+        for (let i = 0; i < localStorage.length; i++) {
+            const k = localStorage.key(i);
+            if (k && k.startsWith(DAILY_STORAGE_PREFIX) && k !== key) {
+                stale.push(k);
+            }
+        }
+        stale.forEach(k => localStorage.removeItem(k));
+    } catch (e) {
+        // ignore — localStorage write failed
+    }
+}
+
 // XSS Prevention Utility
 function escapeHTML(str) {
     if (!str) return '';
@@ -1239,7 +1277,16 @@ function handleFormSubmit(event) {
         return;
     }
 
-    // 2. Rate limiting check (30 seconds)
+    // 2. Daily submit limit (per browser) — counts successful sends only
+    if (getDailySubmitCount() >= DAILY_SUBMIT_LIMIT) {
+        alert(
+            '금일 문의 한도(' + DAILY_SUBMIT_LIMIT + '회)에 도달했습니다.\n' +
+            '급한 문의는 doohoberry@gmail.com 으로 직접 보내주세요.'
+        );
+        return;
+    }
+
+    // 3. Rate limiting check (30 seconds)
     const now = Date.now();
     if (now - _lastSubmitTime < 30000) {
         alert('문의는 30초에 한 번만 전송할 수 있습니다. 잠시 후 다시 시도해 주세요.');
@@ -1265,7 +1312,7 @@ function handleFormSubmit(event) {
     const categorySelect = document.getElementById('contact-category');
     const categoryText = categorySelect.options[categorySelect.selectedIndex].text;
 
-    // 3. XSS 방어를 위한 입력값 Sanitization
+    // 4. XSS 방어를 위한 입력값 Sanitization
     const templateParams = {
         company_name: escapeHTML(document.getElementById('company-name').value),
         contact_name: escapeHTML(document.getElementById('contact-name').value),
@@ -1274,7 +1321,7 @@ function handleFormSubmit(event) {
         category: categoryText,
         varieties: checkedVarieties.length > 0 ? checkedVarieties.join(', ') : '선택 없음',
         message: escapeHTML(document.getElementById('contact-message').value),
-        to_email: 'geonhee070815@gmail.com'
+        to_email: 'doohoberry@gmail.com'
     };
 
     // Update rate limit time after successful validation
@@ -1283,7 +1330,9 @@ function handleFormSubmit(event) {
     // ⚠️ 'YOUR_SERVICE_ID'와 'YOUR_TEMPLATE_ID'를 EmailJS에서 발급받은 값으로 교체해야 합니다.
     emailjs.send('service_57pbhwg', 'template_37ognp2', templateParams)
         .then(function () {
-            // 성공
+            // 성공 — 일일 카운터 증가 (실패한 경우는 증가시키지 않음)
+            incrementDailySubmitCount();
+
             btn.innerHTML = '<span>✓ 문의가 접수되었습니다!</span>';
             btn.style.background = '#2E7D32';
             btn.style.opacity = '1';
