@@ -1120,24 +1120,36 @@ function contactPage() {
                         <label id="varieties-label">관심 품종 (복수 선택 가능)</label>
                         <div class="form-checkbox-group">
                             <label class="form-checkbox">
-                                <input type="checkbox" value="seolhyang"> 
-                                <span class="checkmark"></span>
-                                설향
+                                <input type="checkbox" value="seolhyang">
+                                <span class="form-checkbox-text">설향</span>
                             </label>
                             <label class="form-checkbox">
-                                <input type="checkbox" value="geumsil"> 
-                                <span class="checkmark"></span>
-                                금실 
+                                <input type="checkbox" value="geumsil">
+                                <span class="form-checkbox-text">금실</span>
                             </label>
                             <label class="form-checkbox">
                                 <input type="checkbox" value="jukhyang">
-                                <span class="checkmark"></span>
-                                죽향
+                                <span class="form-checkbox-text">죽향</span>
+                            </label>
+                            <label class="form-checkbox">
+                                <input type="checkbox" value="honghee">
+                                <span class="form-checkbox-text">홍희</span>
+                            </label>
+                            <label class="form-checkbox">
+                                <input type="checkbox" value="cenderella">
+                                <span class="form-checkbox-text">센데렐라</span>
+                            </label>
+                            <label class="form-checkbox">
+                                <input type="checkbox" value="joyberry">
+                                <span class="form-checkbox-text">조이베리</span>
+                            </label>
+                            <label class="form-checkbox">
+                                <input type="checkbox" value="pinkcandy">
+                                <span class="form-checkbox-text">핑크캔디</span>
                             </label>
                             <label class="form-checkbox">
                                 <input type="checkbox" value="seedling">
-                                <span class="checkmark"></span>
-                                딸기묘
+                                <span class="form-checkbox-text">딸기묘</span>
                             </label>
                         </div>
                     </div>

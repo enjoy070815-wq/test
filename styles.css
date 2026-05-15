@@ -4771,38 +4771,50 @@ button {
 /* ==========================================
    CONTACT ENHANCEMENTS
    ========================================== */
-.form-checkbox-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-md);
+.form-group .form-checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 10px;
+    margin-top: var(--space-sm);
 }
 
-.form-checkbox {
-    display: flex;
+.form-group .form-checkbox {
+    display: inline-flex;
     align-items: center;
     gap: 8px;
     font-size: 0.9rem;
+    font-weight: 400;
     color: var(--color-text-secondary);
     cursor: pointer;
     padding: 8px 14px;
+    margin-bottom: 0;
     border-radius: var(--radius-sm);
     border: 1.5px solid var(--color-warm-gray-dark);
     transition: all var(--transition-fast);
+    user-select: none;
+    line-height: 1;
 }
 
-.form-checkbox:hover {
+.form-group .form-checkbox:hover {
     border-color: var(--color-primary);
     background: var(--color-primary-50);
 }
 
-.form-checkbox input[type="checkbox"] {
+.form-group .form-checkbox input[type="checkbox"] {
     accent-color: var(--color-primary);
     width: 16px;
     height: 16px;
     cursor: pointer;
+    margin: 0;
+    flex-shrink: 0;
 }
 
-.form-checkbox .checkmark {
+.form-group .form-checkbox-text {
+    line-height: 1;
+}
+
+/* Legacy: hide old checkmark span if still present */
+.form-group .form-checkbox .checkmark {
     display: none;
 }
 
